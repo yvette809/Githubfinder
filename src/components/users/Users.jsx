@@ -1,9 +1,14 @@
 import React from 'react'
  import UserItem from './UserItem'
+import Spinner from '../../layout/Spinner'
+//import PropTypes from 'prop-types';
 
 
 const Users = (props) =>{
-    
+   
+    if(props.loading){
+        return <Spinner/>
+    }else{
         return (
             <div style ={userStyle}>
                 {props.users.map(user =>(
@@ -11,9 +16,17 @@ const Users = (props) =>{
                 ))}
             </div>
         )
+    }
+    
+       
     
 
 }
+
+// Users.PropTypes={
+//     users:PropTypes.array.isRequired,
+//     loading:propTypes.bool.isRequired
+//}
 const userStyle ={
     display:'grid',
     gridTemplateColumns: 'repeat(3,1fr)',
