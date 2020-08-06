@@ -3,8 +3,11 @@ import React from 'react';
 import './App.css';
 import Search from './components/users/Search'
 import NavBar from './layout/NavBar';
+import Alert from './layout/Alert'
 import Users from './components/users/Users'
 import axios from 'axios'
+import About from './components/pages/About'
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 //import 'bootstrap/dist/css/bootstrap.min.css'
 
 class App extends React.Component{
@@ -40,22 +43,38 @@ class App extends React.Component{
     this.setState({
       alert:{msg,type}
     })
+
+    setTimeout(()=> this.setState({alert:null}),1000)
   }
   
 
   render(){
     return (
+      <Router>
       <div className="App">
         <NavBar />
-        <Search
+        <div className = "container">
+          <Alert alert ={this.state.alert}/>
+          <Switch>
+            <Route exact path='/' render = {props=>(
+              <>
+                  <Search
          searchUsers={this.searchUsers} 
          clearUsers={this.clearUsers}
          showClear = {this.state.users.length >0?true:false}
          setAlert= {this.setAlert}
          />
         <Users loading={this.state.loading} users= {this.state.users}/>
-       
+              </>
+            )}>
+
+            </Route>
+            <Route path ='/About' Component ={About}></Route>
+          </Switch>
+        
+        </div>
       </div>
+      </Router>
     );
   }
 }
