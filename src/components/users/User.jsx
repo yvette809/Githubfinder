@@ -1,11 +1,13 @@
 import React from 'react';
 import Spinner from '../../layout/Spinner'
 import {Link} from 'react-router-dom'
+import Repos from '../repos/Repos'
 
 class User extends React.Component{
 
     componentDidMount(){
         this.props.getUser(this.props.match.params.login)
+        this.props.getUserRepos(this.props.match.params.login)
     }
     render(){
         const {
@@ -23,7 +25,7 @@ class User extends React.Component{
              public_gists,
              hireable}= this.props.user
 
-             const{loading} = this.props
+             const{loading,repos} = this.props
              if(loading)return <Spinner/>
         return(
             <>
@@ -87,6 +89,7 @@ class User extends React.Component{
                 <div className="badge badge-light">public Repos:{public_repos}</div>
                 <div className="badge badge-dark">Public Gists:{public_gists}</div>
             </div>
+            <Repos repos={repos}/>
             </>
         )
     
